@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selvarangan — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy:#0B1628;--charcoal:#1E2D40;--slate:#8899AA;--gold:#E8A830;--cream:#F0EDE6;--white:#FFFFFF;--card-bg:#F7F5F1; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--navy); overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 5%; background: rgba(11,22,40,0.92); backdrop-filter: blur(10px); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold); letter-spacing: 0.04em; }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a { color: var(--cream); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    #hero { min-height: 100vh; background: var(--navy); display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 7rem 5% 4rem; position: relative; overflow: hidden; }
+    #hero::before { content: "S"; font-family: 'Playfair Display', serif; font-size: 52vw; font-weight: 900; color: rgba(255,255,255,0.025); position: absolute; right: -8vw; top: 50%; transform: translateY(-50%); line-height: 1; pointer-events: none; user-select: none; }
+    .hero-text { position: relative; z-index: 2; }
+    .hero-eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 900; line-height: 1.0; color: var(--white); margin-bottom: 0.6rem; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2.2vw, 1.6rem); font-weight: 400; font-style: italic; color: var(--slate); margin-bottom: 1.8rem; }
+    .hero-bio { font-size: 0.95rem; line-height: 1.8; color: #b0bfcc; max-width: 440px; margin-bottom: 2.4rem; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--gold); color: var(--navy); padding: 0.75rem 1.8rem; border-radius: 2px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline { border: 1.5px solid var(--slate); color: var(--cream); padding: 0.75rem 1.8rem; border-radius: 2px; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-photo-wrap { display: flex; justify-content: center; align-items: center; position: relative; z-index: 2; }
+    .hero-photo-frame { width: clamp(240px, 30vw, 380px); aspect-ratio: 3/4; position: relative; }
+    .hero-photo-frame::before { content: ''; position: absolute; inset: -14px 14px 14px -14px; border: 2px solid var(--gold); border-radius: 2px; }
+    .hero-photo-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 2px; display: block; }
+    .photo-placeholder { width: 100%; height: 100%; background: linear-gradient(160deg, var(--charcoal) 0%, #2a3f5a 100%); border-radius: 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; }
+    .photo-placeholder .initials { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900; color: rgba(232,168,48,0.6); line-height: 1; }
+    .photo-placeholder .ph-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); }
+    section { padding: 5.5rem 5%; }
+    .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.15; color: var(--navy); margin-bottom: 1rem; }
+    .section-sub { font-size: 0.93rem; line-height: 1.75; color: #5a6a7a; max-width: 540px; margin-bottom: 3rem; }
+    #skills { background: var(--cream); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+    .skill-card { background: var(--white); border: 1px solid #e0dbd4; border-radius: 4px; padding: 1.6rem 1.4rem; transition: transform 0.2s, box-shadow 0.2s; }
+    .skill-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(11,22,40,0.08); }
+    .skill-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+    .skill-name { font-weight: 600; font-size: 0.95rem; color: var(--navy); margin-bottom: 0.5rem; }
+    .skill-bar-track { height: 3px; background: #e0dbd4; border-radius: 99px; overflow: hidden; }
+    .skill-bar-fill { height: 100%; background: var(--gold); border-radius: 99px; }
+    .skill-level { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); margin-top: 0.45rem; }
+    #projects { background: #EEE9E0; }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+    .project-card { background: var(--white); border-radius: 4px; overflow: hidden; border: 1px solid #e0dbd4; transition: transform 0.2s, box-shadow 0.2s; }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(11,22,40,0.1); }
+    .project-thumb { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .project-body { padding: 1.4rem; }
+    .project-tag { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .project-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .project-desc { font-size: 0.87rem; line-height: 1.7; color: #5a6a7a; margin-bottom: 1rem; }
+    .project-links { display: flex; gap: 0.8rem; }
+    .proj-link { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--navy); border-bottom: 1.5px solid var(--gold); padding-bottom: 1px; transition: color 0.2s; }
+    .proj-link:hover { color: var(--gold); }
+    #contact { background: var(--cream); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .contact-info-items { display: flex; flex-direction: column; gap: 1.4rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .ci-icon { width: 42px; height: 42px; flex-shrink: 0; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .ci-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.2rem; }
+    .ci-value { font-size: 0.95rem; font-weight: 500; color: var(--navy); }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-field { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-field label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); }
+    .form-field input, .form-field textarea { border: 1.5px solid #d4cfc9; border-radius: 2px; padding: 0.7rem 0.9rem; font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--navy); background: var(--white); transition: border-color 0.2s; resize: vertical; }
+    .form-field input:focus, .form-field textarea:focus { outline: none; border-color: var(--gold); }
+    .form-field textarea { min-height: 110px; }
+    footer { background: var(--charcoal); padding: 1.8rem 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.8rem; color: var(--slate); }
+    .footer-socials { display: flex; gap: 1.4rem; }
+    .footer-socials a { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); text-decoration: none; transition: color 0.2s; }
+    .footer-socials a:hover { color: var(--gold); }
+    @media (max-width: 860px) {
+      #hero { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+      .hero-bio { margin: 0 auto 2.4rem; }
+      .hero-ctas { justify-content: center; }
+      #hero::before { font-size: 80vw; right: 50%; transform: translate(50%, -50%); }
+      .hero-photo-wrap { order: -1; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    @media (max-width: 560px) { nav { padding: 1rem 4%; } .nav-links { gap: 1.2rem; } section { padding: 4rem 4%; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">S.</div>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Available for opportunities</p>
+      <h1 class="hero-name">Selvarangan</h1>
+      <p class="hero-title">Frontend Developer &amp; UI Designer</p>
+      <p class="hero-bio">I build clean, accessible web experiences that balance aesthetic craft with technical precision. Passionate about interaction design, performance, and turning complex ideas into intuitive interfaces.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-frame">
+        <div class="photo-placeholder">
+          <div class="initials">S</div>
+          <div class="ph-label">Your photo here</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <p class="section-label">What I bring</p>
+    <h2 class="section-title">Skills &amp; Expertise</h2>
+    <p class="section-sub">A focused set of tools I reach for on every project — from layout to deployment.</p>
+    <div class="skills-grid">
+      <div class="skill-card"><div class="skill-icon">🎨</div><div class="skill-name">HTML &amp; CSS</div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%"></div></div><div class="skill-level">Expert</div></div>
+      <div class="skill-card"><div class="skill-icon">⚡</div><div class="skill-name">JavaScript</div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div><div class="skill-level">Advanced</div></div>
+      <div class="skill-card"><div class="skill-icon">⚛️</div><div class="skill-name">React</div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div><div class="skill-level">Advanced</div></div>
+      <div class="skill-card"><div class="skill-icon">🎭</div><div class="skill-name">UI / UX Design</div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div><div class="skill-level">Proficient</div></div>
+      <div class="skill-card"><div class="skill-icon">🛠️</div><div class="skill-name">Git &amp; GitHub</div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div><div class="skill-level">Advanced</div></div>
+      <div class="skill-card"><div class="skill-icon">📦</div><div class="skill-name">Node.js</div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:65%"></div></div><div class="skill-level">Intermediate</div></div>
+      <div class="skill-card"><div class="skill-icon">🗄️</div><div class="skill-name">SQL / Databases</div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%"></div></div><div class="skill-level">Intermediate</div></div>
+      <div class="skill-card"><div class="skill-icon">📱</div><div class="skill-name">Responsive Design</div><div class="skill-bar-track"><div class="skill-bar-fill" style="width:92%"></div></div><div class="skill-level">Expert</div></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <p class="section-label">Selected work</p>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-sub">A few things I've built — ranging from side experiments to client work.</p>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-thumb" style="background:#EAF2FF;">🛒</div>
+        <div class="project-body">
+          <p class="project-tag">E-commerce · React</p>
+          <h3 class="project-title">ShopFlow</h3>
+          <p class="project-desc">A full-featured shopping cart app with real-time inventory, Stripe payments, and a custom CMS for product management.</p>
+          <div class="project-links"><a href="#" class="proj-link">Live Demo</a><a href="#" class="proj-link">GitHub</a></div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb" style="background:#F0F7EE;">🌿</div>
+        <div class="project-body">
+          <p class="project-tag">Dashboard · Data Viz</p>
+          <h3 class="project-title">GreenMetrics</h3>
+          <p class="project-desc">An analytics dashboard for tracking carbon footprint data with interactive charts, CSV export, and team collaboration features.</p>
+          <div class="project-links"><a href="#" class="proj-link">Live Demo</a><a href="#" class="proj-link">GitHub</a></div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb" style="background:#FDF0E6;">✍️</div>
+        <div class="project-body">
+          <p class="project-tag">Blog · CMS · Next.js</p>
+          <h3 class="project-title">Inkwell</h3>
+          <p class="project-desc">A minimal long-form writing platform with Markdown support, dark mode, and a focus on typography and readability.</p>
+          <div class="project-links"><a href="#" class="proj-link">Live Demo</a><a href="#" class="proj-link">GitHub</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <p class="section-label">Let's talk</p>
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="contact-grid">
+      <div>
+        <p class="section-sub">Have a project in mind or just want to say hello? I'd love to hear from you.</p>
+        <div class="contact-info-items">
+          <div class="contact-item"><div class="ci-icon">📧</div><div><div class="ci-label">Email</div><div class="ci-value">selvarangan@example.com</div></div></div>
+          <div class="contact-item"><div class="ci-icon">📍</div><div><div class="ci-label">Location</div><div class="ci-value">Chennai, Tamil Nadu, India</div></div></div>
+          <div class="contact-item"><div class="ci-icon">💼</div><div><div class="ci-label">LinkedIn</div><div class="ci-value">linkedin.com/in/selvarangan</div></div></div>
+          <div class="contact-item"><div class="ci-icon">🐙</div><div><div class="ci-label">GitHub</div><div class="ci-value">github.com/selvarangan</div></div></div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-field"><label for="name">Your Name</label><input type="text" id="name" placeholder="Jane Smith" /></div>
+        <div class="form-field"><label for="email">Email Address</label><input type="email" id="email" placeholder="jane@example.com" /></div>
+        <div class="form-field"><label for="subject">Subject</label><input type="text" id="subject" placeholder="Project inquiry" /></div>
+        <div class="form-field"><label for="message">Message</label><textarea id="message" placeholder="Tell me about your project..."></textarea></div>
+        <button type="submit" class="btn-primary" style="align-self:flex-start; border:none; cursor:pointer;">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-copy">© 2024 Selvarangan. Built with HTML &amp; CSS.</div>
+    <div class="footer-socials">
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Twitter</a>
+      <a href="#">Dribbble</a>
+    </div>
+  </footer>
+
+</body>
+</html>
